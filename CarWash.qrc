@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>weather/rain.png</file>
+        <file>weather/snow.png</file>
+        <file>weather/sunny.png</file>
+        <file>weather/thunderstorm.png</file>
+        <file>weather/unknown.png</file>
+        <file>weather/light-rain.png</file>
+        <file>image/car/crossover.png</file>
+        <file>image/car/default.png</file>
+        <file>image/car/jeep.png</file>
+        <file>image/car/universal.png</file>
+        <file>weather/error.png</file>
+        <file>image/main_icon.png</file>
+        <file>image/main.png</file>
+        <file>icons/arrow-down.png</file>
+        <file>image/car_logo.png</file>
+        <file>weather/partly-cloudy.png</file>
+        <file>image/car/sedan.png</file>
+        <file>image/account.png</file>
+        <file>image/calendar.png</file>
+        <file>image/map.png</file>
+        <file>image/settings.png</file>
+    </qresource>
+</RCC>
