@@ -16,6 +16,7 @@
 #include "personalAccountWidget.h"
 #include "TapBarBottomWidget.h"
 #include "CalendarWidget.h"
+#include "RecordWashWidget.h"
 //#include "SettingsWidget.h"
 
 bool initializeDatabase() {
@@ -75,6 +76,7 @@ void setupMainWindow(QMainWindow& window) {
     PersonalAccountWidget* personalAccountWidget = new PersonalAccountWidget;
     TapBarBottomWidget* tapBarBottomWidget = new TapBarBottomWidget;
     CalendarWidget* calendarWidget = new CalendarWidget;
+    RecordWash* recordWashWidget = new RecordWash;
 
     // Создаем виджет для объединения weather и account
     QWidget* weatherAndAccountWidget = new QWidget;
@@ -94,6 +96,7 @@ void setupMainWindow(QMainWindow& window) {
     stackedWidget->addWidget(weatherAndAccountWidget);  // Индекс 1 (теперь содержит оба виджета)
     stackedWidget->addWidget(carInfoWidget);            // Индекс 2
     stackedWidget->addWidget(calendarWidget);           // Индекс 3
+    stackedWidget->addWidget(recordWashWidget);         // Индекс 4
 
     // Установка stretch факторов (опционально)
     //mainLayout->setStretch(0, 1); // WeatherWidget будет занимать 1 часть
@@ -109,8 +112,12 @@ void setupMainWindow(QMainWindow& window) {
 
     QObject::connect(authorizationsWidget, &AuthorizationsWidget::getUserId, personalAccountWidget, &PersonalAccountWidget::loadUserData);
 
+    QObject::connect(tapBarBottomWidget, &TapBarBottomWidget::buttonClicked,
+        stackedWidget, [stackedWidget](int index) {
+            stackedWidget->setCurrentIndex(index);
+        });
+   
     // Настройка главного окна
-
     window.setCentralWidget(stackedWidget);
     window.setWindowTitle("Автомойка 'Чистый путь'");
     window.setWindowIcon(QIcon(":/image/main_icon.png"));
@@ -197,7 +204,7 @@ int main(int argc, char* argv[]) {
         QMessageBox::information(&mainWindow, "Добро пожаловать",
             "Пожалуйста, заполните данные профиля");
         // Перенаправляем сразу в настройки
-        qobject_cast<QStackedWidget*>(mainWindow.centralWidget())->setCurrentIndex(0);
+        qobject_cast<QStackedWidget*>(mainWindow.centralWidget())->setCurrentIndex(4);
     }
 
     mainWindow.show();

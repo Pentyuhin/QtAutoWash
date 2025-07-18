@@ -1,6 +1,7 @@
 #include "TapBarBottomWidget.h"
 
 #include <QHBoxLayout>
+#include <QStackedWidget>
 
 TapBarBottomWidget::TapBarBottomWidget(QWidget* parent) :
 	QWidget(parent),
@@ -34,6 +35,15 @@ void TapBarBottomWidget::setupUI() {
 	setupButton(m_mapsBtn, ":/image/map.png");
 	setupButton(m_recordBtn, ":/image/calendar.png");
 
+	// Устанавливаем соответствие кнопок и индексов
+	m_buttonIndices = {
+
+		{m_settingsBtn, 0},
+		{m_personalAccountBtn, 1},
+		{m_mapsBtn, 2},
+		{m_recordBtn, 3}
+	};
+
 	containerLayout->addWidget(m_settingsBtn);
 	containerLayout->addWidget(m_personalAccountBtn);
 	containerLayout->addWidget(m_mapsBtn);
@@ -47,6 +57,10 @@ void TapBarBottomWidget::setupUI() {
 
 	// Устанавливаем выравнивание всего layout по центру
 	mainLayout->setAlignment(Qt::AlignCenter);
+
+	// Подключаем все кнопки к одному слоту
+	connect(m_recordBtn, &QPushButton::clicked, this, &TapBarBottomWidget::handleButtonClick);
+
 }
 
 void TapBarBottomWidget::setupButton(QPushButton* button, const QString &iconPath) {
@@ -75,4 +89,18 @@ void TapBarBottomWidget::setupButton(QPushButton* button, const QString &iconPat
 
 	// Фиксируем размер кнопки
 	button->setFixedSize(50, 50);
+}
+
+
+void TapBarBottomWidget::handleButtonClick() {
+
+	// Определяем, какая кнопка была нажата
+	QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
+	if (clickedButton && m_buttonIndices.contains(clickedButton)) {
+	
+		// Отправляем сигнал с индексом
+		emit buttonClicked(m_buttonIndices.value(clickedButton));
+
+	}
+
 }
