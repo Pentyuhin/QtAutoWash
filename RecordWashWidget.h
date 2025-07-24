@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QDate>
 #include <QTime>
+#include <QCheckBox>
 
 
 
@@ -26,12 +27,6 @@ public:
 	void printTimeSlots();
 	void printDateSlots();
 
-
-
-	//void getDates();	// Получение даты
-	//void getTimes();	// Получение времени 
-	//void getServices();	// Получение услуги
-
 private:
 
 	// Основной метод настройки интерфейса
@@ -40,10 +35,21 @@ private:
 	// Методы создания виджетов
 	QWidget* createRatesWidget(QWidget* parent);
 	QWidget* createServicesWidget(QWidget* parent);
+	QWidget* createDateWidget(QWidget* parent);
+	QWidget* createTimeWidget(QWidget* parent);
+
+	// Объявление шаблонной функции
+	template<typename T>
+	QWidget* createButtonGridWidget(
+		QWidget* parent,
+		const QString& title,
+		const QList<T>& items,
+		std::function<QString(const T&)> toStringFunc);
 
 	// Вспомогательные методы создания элементов
 	QLabel* createLabel(const QString& text);
-	QCheckBox* createCheckBox(const QString& text, QWidget* parent); // Добавлено объявление
+	QCheckBox* createCheckBox(const QString& text, QWidget* parent);
+	QPushButton* createButton(const QString& text);
 
 	// Метод для выравнивания ширины виджетов
 	void alignWidgetsWidth(const QList<QWidget*>& widgets);
@@ -51,9 +57,6 @@ private:
 	// Члены класса для хранения UI-элементов (при необходимости)
 	QButtonGroup* m_ratesGroup;
 
-	//void setDates(QDate& date);	// Установка даты
-	//void setTimes(QTime& time);	// Установка времени 
-	//void setServices(QString services);	// Установка услуги
 
 private:
 
